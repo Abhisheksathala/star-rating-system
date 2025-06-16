@@ -16,7 +16,7 @@ const ChangePassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.put('/auth/update-password', form);
+      await api.put('/auth/update-password', form, {});
       setMsg({ type: 'success', text: 'Password updated – please log in again.' });
       setTimeout(() => {
         logout();
@@ -28,7 +28,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded shadow">
+    <div className="max-w-md mx-auto p-6 bg-white rounded shadow flex items-center justify-center flex-col mt-52">
       <h2 className="text-xl font-semibold mb-4">Change Password</h2>
       {msg && (
         <p className={msg.type === 'error' ? 'text-red-500' : 'text-green-600'}>{msg.text}</p>

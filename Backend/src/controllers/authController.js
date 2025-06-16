@@ -12,14 +12,14 @@ exports.signup = async (req, res) => {
   const { name, email, address, password, role } = req.body;
 
   try {
-    if (
-      !isValidEmail(email) ||
-      !isValidPassword(password) ||
-      !isValidName(name) ||
-      !isValidAddress(address)
-    ) {
-      return res.status(400).json({ message: 'Invalid input fields' });
-    }
+    // if (
+    //   !isValidEmail(email) ||
+    //   !isValidPassword(password) ||
+    //   !isValidName(name) ||
+    //   !isValidAddress(address)
+    // ) {
+    //   return res.status(400).json({ message: 'Invalid input fields' });
+    // }
 
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) return res.status(409).json({ message: 'Email already exists' });
@@ -66,9 +66,9 @@ exports.updatePassword = async (req, res) => {
     if (!user || !(await comparePassword(oldPassword, user.password)))
       return res.status(401).json({ message: 'Incorrect old password' });
 
-    if (!isValidPassword(newPassword)) {
-      return res.status(400).json({ message: 'New password does not meet criteria' });
-    }
+    // if (!isValidPassword(newPassword)) {
+    //   return res.status(400).json({ message: 'New password does not meet criteria' });
+    // }
 
     const hashed = await hashPassword(newPassword);
     await prisma.user.update({ where: { id: userId }, data: { password: hashed } });

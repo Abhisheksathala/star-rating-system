@@ -3,7 +3,6 @@ import api from '../utils/api';
 // import { useNavigate } from 'react-router-dom';
 
 const AdminAddStore = ({ onCreated }) => {
-  // const navigate = useNavigate();
   const [owners, setOwners] = useState([]);
   const [form, setForm] = useState({
     name: '',
@@ -14,7 +13,6 @@ const AdminAddStore = ({ onCreated }) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Fetch all STORE_OWNER users to populate the dropdown
   useEffect(() => {
     const fetchOwners = async () => {
       try {
@@ -38,7 +36,7 @@ const AdminAddStore = ({ onCreated }) => {
     try {
       await api.post('/admin/stores', form);
       setSuccess('Store created successfully!');
-      onCreated?.(); // callback to refresh the list
+      onCreated?.();
       setForm({ name: '', email: '', address: '', ownerId: '' });
     } catch (err) {
       setError(err.response?.data?.message || 'Creation failed');
