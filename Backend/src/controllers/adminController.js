@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('../generated/prisma');
 const prisma = new PrismaClient();
 const { hashPassword } = require('../utils/authUtils');
 const {
@@ -84,9 +84,9 @@ exports.getStores = async (req, res) => {
       email: store.email,
       address: store.address,
       rating: store.ratings.length
-        ? (store.ratings.reduce((a, b) => a + b.score, 0) / store.ratings.length).toFixed(1)
+        ? (store.ratings.reduce((a, b) => a + b.rating, 0) / store.ratings.length).toFixed(1)
         : 'N/A',
-      owner: store.owner?.name,
+      owner: store.owner?.name || 'N/A',
     }));
 
     res.json(response);

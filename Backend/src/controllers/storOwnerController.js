@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('../generated/prisma');
 const prisma = new PrismaClient();
 
 exports.getDashboard = async (req, res) => {
@@ -33,7 +33,7 @@ exports.getDashboard = async (req, res) => {
     }));
 
     const avgRating = store.ratings.length
-      ? (store.ratings.reduce((a, b) => a + b.score, 0) / store.ratings.length).toFixed(1)
+      ? (store.ratings.reduce((a, b) => a + b.rating, 0) / store.ratings.length).toFixed(1)
       : 'N/A';
 
     res.json({
@@ -42,6 +42,27 @@ exports.getDashboard = async (req, res) => {
       averageRating: avgRating,
       ratings,
     });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+exports.createOrUpdateStore = async (req, res) => {
+  const ownerId = req.user.id;
+  const { name, email, address } = req.body;
+
+  try {
+    let store = await prisma.store.findFirst({ where: { ownerId } });
+    if (store) {
+      store = await prisma.store.update({
+        where: { id: store.id },
+        data: { name, email, address },
+      });
+      return res.json({ message: 'Store updated', store });
+    }
+    store = await prisma.store.create({
+      data: { name, email, address, ownerId },
+    });
+    res.status(201).json({ message: 'Store created', store });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

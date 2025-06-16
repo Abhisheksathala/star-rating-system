@@ -1,10 +1,9 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('../generated/prisma');
 const prisma = new PrismaClient();
 
-// Get all stores with user's rating (if any)
 exports.getStores = async (req, res) => {
   const userId = req.user.id;
-  const { name, address } = req.query;
+  const { name = '', address = '' } = req.query;
 
   try {
     const stores = await prisma.store.findMany({
@@ -29,7 +28,7 @@ exports.getStores = async (req, res) => {
         });
 
         const avgRating = store.ratings.length
-          ? (store.ratings.reduce((a, b) => a + b.score, 0) / store.ratings.length).toFixed(1)
+          ? (store.ratings.reduce((a, b) => a + b.rating, 0) / store.ratings.length).toFixed(1)
           : 'N/A';
 
         return {
@@ -37,13 +36,14 @@ exports.getStores = async (req, res) => {
           name: store.name,
           address: store.address,
           overallRating: avgRating,
-          userRating: userRating?.score || null,
+          userRating: userRating?.rating || null,
         };
       }),
     );
 
     res.json(results);
   } catch (err) {
+    console.error('Error in getStores:', err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -73,7 +73,7 @@ exports.submitRating = async (req, res) => {
 
     const rating = await prisma.rating.create({
       data: {
-        score,
+        rating: score,
         userId,
         storeId,
       },
@@ -81,6 +81,7 @@ exports.submitRating = async (req, res) => {
 
     res.status(201).json({ message: 'Rating submitted', rating });
   } catch (err) {
+    console.error('Error in submitRating:', err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -103,7 +104,7 @@ exports.modifyRating = async (req, res) => {
         },
       },
       data: {
-        score,
+        rating: score,
       },
     });
 

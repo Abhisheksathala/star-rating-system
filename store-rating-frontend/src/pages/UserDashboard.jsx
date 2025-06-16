@@ -14,14 +14,14 @@ const UserDashboard = () => {
       setStores(res.data);
       setLoading(false);
     } catch (err) {
-      setError('Failed to load stores');
+      setError('Failed to load stores', err);
       setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchStores();
-  }, []);
+  }, [search.name, search.address]);
 
   const handleRating = async (storeId, score, hasRated) => {
     try {

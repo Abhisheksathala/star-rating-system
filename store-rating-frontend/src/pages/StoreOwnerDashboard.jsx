@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import api from '../utils/api';
+import { useNavigate } from 'react-router-dom';
 
 const StoreOwnerDashboard = () => {
+  const navigate = useNavigate();
+
   const [storeInfo, setStoreInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -13,7 +16,7 @@ const StoreOwnerDashboard = () => {
       setStoreInfo(res.data);
       setLoading(false);
     } catch (err) {
-      setError('Failed to load dashboard');
+      setError('Failed to load dashboard', err);
       setLoading(false);
     }
   };
@@ -25,6 +28,12 @@ const StoreOwnerDashboard = () => {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">My Store Dashboard</h2>
+      {/* <button
+        onClick={() => navigate('/store-owner/create-store')}
+        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        {storeInfo ? 'Edit Store' : 'Create Store'}
+      </button> */}
 
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
