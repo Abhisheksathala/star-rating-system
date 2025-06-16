@@ -3,13 +3,12 @@ CREATE TYPE "Role" AS ENUM ('ADMIN', 'USER', 'STORE_OWNER');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" VARCHAR(60) NOT NULL,
-    "email" VARCHAR(100) NOT NULL,
-    "address" VARCHAR(400) NOT NULL,
+    "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'USER',
-    "storeId" INTEGER,
+    "address" VARCHAR(400) NOT NULL,
+    "role" "Role" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -17,11 +16,11 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Store" (
-    "id" SERIAL NOT NULL,
-    "name" VARCHAR(60) NOT NULL,
-    "email" VARCHAR(100) NOT NULL,
-    "address" VARCHAR(400) NOT NULL,
-    "ownerId" INTEGER,
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "ownerId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Store_pkey" PRIMARY KEY ("id")
@@ -29,12 +28,11 @@ CREATE TABLE "Store" (
 
 -- CreateTable
 CREATE TABLE "Rating" (
-    "id" SERIAL NOT NULL,
-    "score" INTEGER NOT NULL,
-    "userId" INTEGER NOT NULL,
-    "storeId" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "rating" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+    "storeId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Rating_pkey" PRIMARY KEY ("id")
 );
@@ -43,19 +41,10 @@ CREATE TABLE "Rating" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_storeId_key" ON "User"("storeId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Store_email_key" ON "Store"("email");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Store_ownerId_key" ON "Store"("ownerId");
 
--- CreateIndex
-CREATE UNIQUE INDEX "Rating_userId_storeId_key" ON "Rating"("userId", "storeId");
-
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "Store"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Store" ADD CONSTRAINT "Store_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Rating" ADD CONSTRAINT "Rating_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

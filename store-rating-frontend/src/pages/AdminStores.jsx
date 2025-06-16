@@ -10,7 +10,7 @@ const AdminStores = () => {
         const res = await api.get('/admin/stores');
         setStores(res.data);
       } catch (err) {
-        console.error('Failed to fetch stores');
+        console.error('Failed to fetch stores', err);
       }
     };
 

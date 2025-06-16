@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+ provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -14,18 +14,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(60)
-  email     String    @unique @db.VarChar(100)
-  address   String    @db.VarChar(400)
+  id        String   @id @default(uuid())
+  name      String   @db.VarChar(60)
+  email     String   @unique
   password  String
-  role      Role      @default(USER)
+  address   String   @db.VarChar(400)
+  role      Role
   ratings   Rating[]
-  store     Store?    @relation(fields: [storeId], references: [id])
-   storeId   Int?      @unique 
-  createdAt DateTime  @default(now())
+  store     Store?   @relation("StoreOwner") 
+  createdAt DateTime @default(now())
+}
+
+model Store {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  address   String
+  ratings   Rating[]
+  ownerId   String   @unique 
+  owner     User     @relation("StoreOwner", fields: [ownerId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+
+model Rating {
+  id        String   @id @default(uuid())
+  rating    Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  store     Store    @relation(fields: [storeId], references: [id])
+  storeId   String
+  createdAt DateTime @default(now())
 }
 
 enum Role {
@@ -34,28 +54,6 @@ enum Role {
   STORE_OWNER
 }
 
-model Store {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(60)
-  email     String    @unique @db.VarChar(100)
-  address   String    @db.VarChar(400)
-  ratings   Rating[]
-  owner     User?
-  ownerId   Int?      @unique
-  createdAt DateTime  @default(now())
-}
 
-model Rating {
-  id        Int       @id @default(autoincrement())
-  score     Int
-  user      User      @relation(fields: [userId], references: [id])
-  userId    Int
-  store     Store     @relation(fields: [storeId], references: [id])
-  storeId   Int
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  @@unique([userId, storeId])
-}
 
 

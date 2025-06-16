@@ -1,5 +1,4 @@
-const { PrismaClient } = require('../generated/prisma');
-
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const { hashPassword } = require('../utils/authUtils');
 const {
@@ -7,7 +6,7 @@ const {
   isValidPassword,
   isValidName,
   isValidAddress,
-} = require('../utils/validators');
+} = require('../utils/validators.js');
 
 // Dashboard: Get counts
 exports.getDashboard = async (req, res) => {

@@ -1,5 +1,4 @@
-const { PrismaClient } = require('../generated/prisma');
-
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const { createToken, hashPassword, comparePassword } = require('../utils/authUtils');
 const {
@@ -7,7 +6,7 @@ const {
   isValidPassword,
   isValidName,
   isValidAddress,
-} = require('../utils/validators');
+} = require('../utils/validators.js');
 
 exports.signup = async (req, res) => {
   const { name, email, address, password, role } = req.body;

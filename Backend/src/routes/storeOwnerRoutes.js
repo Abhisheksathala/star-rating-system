@@ -1,10 +1,10 @@
 const express = require('express');
-const router = express.Router();
-const { getDashboard } = require('../controllers/storOwnerController.js');
-const { verifyToken, requireRole } = require('../middlewares/authMiddleware');
+const storeOwnerRoutes = express.Router();
+const { getDashboard } = require('../controllers/storOwnerController');
+const { verifyToken, requireRole } = require('../middleware/authMiddleware');
 
-router.use(verifyToken, requireRole('STORE_OWNER'));
+storeOwnerRoutes.use(verifyToken, requireRole('STORE_OWNER'));
 
-router.get('/dashboard', getDashboard);
+storeOwnerRoutes.get('/dashboard', getDashboard);
 
 module.exports = router;

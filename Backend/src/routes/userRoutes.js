@@ -1,13 +1,12 @@
 const express = require('express');
-const router = express.Router();
+const userRoutes = express.Router();
 const { getStores, submitRating, modifyRating } = require('../controllers/userController');
+const { verifyToken, requireRole } = require('../middleware/authMiddleware');
 
-const { verifyToken, requireRole } = require('../middleware/authMiddleware.js');
+userRoutes.use(verifyToken, requireRole('USER'));
 
-router.use(verifyToken, requireRole('USER'));
+userRoutes.get('/stores', getStores);
+userRoutes.post('/rate', submitRating);
+userRoutes.put('/rate', modifyRating);
 
-router.get('/stores', getStores);
-router.post('/rate', submitRating);
-router.put('/rate', modifyRating);
-
-module.exports = router;
+module.exports = userRoutes;
