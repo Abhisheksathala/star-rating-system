@@ -17,3 +17,5 @@ adminRoutes.get('/stores', getStores);
 adminRoutes.get('/users', getUsers);
 
 module.exports = adminRoutes;
+
+//
