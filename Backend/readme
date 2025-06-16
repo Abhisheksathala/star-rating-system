@@ -1,19 +1,211 @@
-# Environment variables declared in this file are automatically made available to Prisma.
+Absolutely bro 💪— here's a complete, professional-level `README.md` for your **Store Rating System** fullstack project using PostgreSQL, Prisma, Express, and React.
 
-# See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
+---
 
-# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+### ✅ `README.md`
 
-# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+```md
+# ⭐ Store Rating System – FullStack Internship Project
 
-# The following `prisma+postgres` URL is similar to the URL produced by running a local Prisma Postgres
+A full-stack web application that allows users to rate stores, and provides different dashboards for Admins, Store Owners, and Users. Built using **React**, **Express.js**, **Prisma ORM**, and **PostgreSQL**.
 
-# server with the `prisma dev` CLI command, when not choosing any non-default ports or settings. The API key, unlike the
+---
 
-# one found in a remote Prisma Postgres URL, does not contain any sensitive information.
+## 🔧 Tech Stack
 
-DATABASE_URL="postgresql://postgres:9949@localhost:5432/start-rating-system?schema=public"
+| Layer    | Technology                 |
+| -------- | -------------------------- |
+| Frontend | React, Axios, Tailwind CSS |
+| Backend  | Express.js, Node.js        |
+| ORM      | Prisma                     |
+| Database | PostgreSQL                 |
+| Auth     | JWT (JSON Web Tokens)      |
 
-JWT_SECRET = our_super_secret_key_here123123123
+---
 
-PORT = 8000
+## ✨ Features
+
+### 🔐 Authentication
+
+- Signup/Login with JWT
+- Role-based access: `ADMIN`, `USER`, `STORE_OWNER`
+- Change password functionality
+
+### 👤 Users
+
+- Browse all stores
+- Submit and update rating (1–5)
+- See their own submitted ratings
+
+### 🏪 Store Owners
+
+- View their store dashboard
+- See users who rated their store
+- View average rating
+- Change password
+- Logout securely
+
+### 🛠️ Admin
+
+- Add new users (USER or STORE_OWNER)
+- Add new stores (assign owner)
+- View all stores with ratings
+- View all users (with filters)
+
+---
+
+## 🧪 Form Validations
+
+| Field    | Rules                                                        |
+| -------- | ------------------------------------------------------------ |
+| Name     | Min 20 chars, Max 60 chars                                   |
+| Email    | Must be a valid format (`user@domain.com`)                   |
+| Password | 8–16 chars, must include 1 uppercase and 1 special character |
+| Address  | Max 400 chars                                                |
+
+---
+
+## 📁 Folder Structure
+```
+
+star-rating-system/
+├── Backend/
+│ ├── prisma/ # Prisma schema
+│ ├── src/
+│ │ ├── controllers/ # Route handlers
+│ │ ├── middleware/ # Auth middlewares
+│ │ ├── routes/ # Express route definitions
+│ │ └── utils/ # Validation and auth helpers
+│ ├── index.js # Express entry point
+│ └── .env # PostgreSQL + JWT secret
+│
+├── Frontend/
+│ ├── src/
+│ │ ├── pages/ # React pages (Dashboard, Login, Signup)
+│ │ ├── context/ # Auth context provider
+│ │ └── utils/ # Axios instance with interceptors
+│ ├── App.jsx
+│ └── main.jsx
+│
+└── README.md
+
+````
+
+---
+
+## ⚙️ Environment Setup
+
+### 🔐 `.env.example` (Backend)
+
+```env
+PORT=8000
+DATABASE_URL=postgresql://username:password@localhost:5432/star_rating_system
+JWT_SECRET=your_jwt_secret_key
+````
+
+### 🔐 `.env.local` (Frontend, optional)
+
+```env
+VITE_API_URL=http://localhost:8000/api
+```
+
+---
+
+## 🧑‍💻 Setup & Run Locally
+
+### 📦 Backend (Express + Prisma)
+
+```bash
+cd Backend
+npm install
+npx prisma generate
+npx prisma migrate dev --name init
+npm run dev
+```
+
+### 💻 Frontend (React)
+
+```bash
+cd Frontend
+npm install
+npm run dev
+```
+
+---
+
+## ✅ API Overview
+
+### Auth Routes
+
+| Method | Endpoint                | Description            |
+| ------ | ----------------------- | ---------------------- |
+| POST   | `/auth/signup`          | Register new user      |
+| POST   | `/auth/login`           | Login and get token    |
+| PUT    | `/auth/update-password` | Change password (auth) |
+
+### Admin Routes
+
+| Method | Endpoint        | Description        |
+| ------ | --------------- | ------------------ |
+| POST   | `/admin/users`  | Create new user    |
+| POST   | `/admin/stores` | Create new store   |
+| GET    | `/admin/users`  | Get filtered users |
+| GET    | `/admin/stores` | Get all stores     |
+
+### Store Owner Routes
+
+| Method | Endpoint                 | Description            |
+| ------ | ------------------------ | ---------------------- |
+| GET    | `/store-owner/dashboard` | View ratings dashboard |
+
+### User Routes
+
+| Method | Endpoint       | Description            |
+| ------ | -------------- | ---------------------- |
+| GET    | `/user/stores` | List/search stores     |
+| POST   | `/user/rate`   | Submit new rating      |
+| PUT    | `/user/rate`   | Update existing rating |
+
+---
+
+## 🚀 Optional Improvements
+
+- Deployment to Render/Vercel (not required)
+- Toast notifications
+- Responsive design polish
+- Email verification / password reset
+- Admin dashboard stats charts 📊
+
+---
+
+## 📬 Submission
+
+If submitting to an internship or company:
+
+- ✅ Push to GitHub (make repo public)
+- ✅ Share link via email or form
+- ✅ Add demo credentials in README (if needed)
+
+---
+
+## 👤 Author
+
+**Abhishek Sathala**
+📧 [abhisheksathala296@gmail.com](mailto:abhisheksathala296@gmail.com)
+🌐 [linkedin.com/in/abhishek-sathala-64566625a](https://linkedin.com/in/abhishek-sathala-64566625a)
+
+---
+
+> Built with ❤️ to level up as a Full Stack Developer.
+
+```
+
+---
+
+Let me know if you'd like:
+- A **shorter** version for GitHub summary
+- Deployment guide to add at the end
+- README in `README.txt` or markdown file
+
+You're officially ready to submit 🚀✅
+```
